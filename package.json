@@ -44,8 +44,10 @@
     "react-table": "7.7.0",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
+    "socket.io-client": "^4.4.1",
     "stylis": "4.0.13",
     "stylis-plugin-rtl": "2.1.1",
+    "timeago.js": "^4.0.2",
     "web-vitals": "2.1.4",
     "yup": "0.32.11"
   },
@@ -84,5 +86,6 @@
     "eslint-plugin-react": "7.28.0",
     "eslint-plugin-react-hooks": "4.3.0",
     "prettier": "2.5.1"
-  }
+  },
+  "proxy": "http://localhost:5000/"
 }

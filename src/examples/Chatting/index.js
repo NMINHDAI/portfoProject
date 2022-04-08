@@ -41,6 +41,7 @@ import decode from "jwt-decode";
 // Material Dashboard 2 React context
 import { useMaterialUIController, setOpenChatting } from "context";
 import { GoogleLogin } from "react-google-login";
+import Messenger from "../../layouts/messenger/Messenger";
 
 import { signin } from "../../actions/auth";
 import * as actionType from "../../constants/actionTypes";
@@ -160,43 +161,48 @@ function Chatting() {
       <Divider />
       <MDBox pt={0.5} pb={3} px={3}>
         {user?.result ? (
-          <MDBox display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
-            <MDBox display="flex" alignItems="center" lineHeight={1}>
-              <MDAvatar alt={user?.result.name} src={user?.result.imageUrl} size="sm" />
-              <MDBox ml={2} sx={{ width: "10rem", maxWidth: "10rem" }} lineHeight={1}>
-                <MDTypography
-                  display="block"
-                  variant="button"
-                  fontWeight="medium"
-                  white-space="nowrap"
-                  overflow="hidden"
-                  text-overflow="ellipsis"
+          <Card>
+            <MDBox display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
+              <MDBox display="flex" alignItems="center" lineHeight={1}>
+                <MDAvatar alt={user?.result.name} src={user?.result.imageUrl} size="sm" />
+                <MDBox ml={2} sx={{ width: "10rem", maxWidth: "10rem" }} lineHeight={1}>
+                  <MDTypography
+                    display="block"
+                    variant="button"
+                    fontWeight="medium"
+                    white-space="nowrap"
+                    overflow="hidden"
+                    text-overflow="ellipsis"
+                  >
+                    {user?.result.name}
+                  </MDTypography>
+                  <MDTypography
+                    display="block"
+                    variant="caption"
+                    white-space="nowrap"
+                    overflow="hidden"
+                    text-overflow="ellipsis"
+                  >
+                    {user?.result.email}
+                  </MDTypography>
+                </MDBox>
+              </MDBox>
+              <MDBox sx={{ mx: 1, width: "4rem", minWidth: "4rem" }}>
+                <MDButton
+                  color="dark"
+                  variant="gradient"
+                  onClick={logout}
+                  fullWidth
+                  sx={sidenavTypeButtonsStyles}
                 >
-                  {user?.result.name}
-                </MDTypography>
-                <MDTypography
-                  display="block"
-                  variant="caption"
-                  white-space="nowrap"
-                  overflow="hidden"
-                  text-overflow="ellipsis"
-                >
-                  {user?.result.email}
-                </MDTypography>
+                  Log out
+                </MDButton>
               </MDBox>
             </MDBox>
-            <MDBox sx={{ mx: 1, width: "4rem", minWidth: "4rem" }}>
-              <MDButton
-                color="dark"
-                variant="gradient"
-                onClick={logout}
-                fullWidth
-                sx={sidenavTypeButtonsStyles}
-              >
-                Log out
-              </MDButton>
+            <MDBox>
+              <Messenger />
             </MDBox>
-          </MDBox>
+          </Card>
         ) : (
           <Card>
             <MDBox
