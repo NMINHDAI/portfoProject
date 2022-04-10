@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://cors-proxy420.herokuapp.com/https://danganhapi.herokuapp.com/"
+  baseURL: "https://cors-proxy420.herokuapp.com/https://danganhapi.herokuapp.com/",
 });
 
 API.interceptors.request.use((req) => {
