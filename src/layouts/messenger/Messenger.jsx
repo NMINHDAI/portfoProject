@@ -55,11 +55,13 @@ export default function Messenger() {
     });
   }, []);
 
-  useEffect(() => {
-    arrivalMessage &&
+  useEffect(
+    () =>
+      arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage, currentChat]);
+      setMessages((prev) => [...prev, arrivalMessage]),
+    [arrivalMessage, currentChat]
+  );
 
   useEffect(() => {
     socket.current.emit("addUser", user.result._id);
@@ -68,7 +70,9 @@ export default function Messenger() {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get(`https://danganhapi.herokuapp.com/conversations/${user?.result._id}`);
+        const res = await axios.get(
+          `https://danganhapi.herokuapp.com/conversations/${user?.result._id}`
+        );
         setConversations(res.data);
       } catch (err) {
         console.log(err);
@@ -80,7 +84,9 @@ export default function Messenger() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get(`https://danganhapi.herokuapp.com/messages/${currentChat?._id}`);
+        const res = await axios.get(
+          `https://danganhapi.herokuapp.com/messages/${currentChat?._id}`
+        );
         setMessages(res.data);
       } catch (err) {
         console.log(err);

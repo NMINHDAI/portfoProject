@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 const socket = () => {
-  const socketPack = io("http://localhost:8900");
+  const socketPack = io(process.env.mainSocket);
   return socketPack;
 };
 
