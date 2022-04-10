@@ -1,24 +1,51 @@
 /* eslint-disable no-param-reassign, no-underscore-dangle */
-import "./messenger.css";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
-
+import { useLocation } from "react-router-dom";
+import { useMaterialUIController, setOpenChat } from "context";
+import MDBox from "components/MDBox";
+import MDButton from "components/MDButton";
 import Conversation from "../../examples/conversations/Conversation";
 import Message from "../../examples/message/Message";
+import socket from "./socketio";
 
 export default function Messenger() {
+  const [controller, dispatch] = useMaterialUIController();
+  const { darkMode, openChat } = controller;
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const socket = useRef();
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const location = useLocation();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const scrollRef = useRef();
+  const handleChat = () => setOpenChat(dispatch, !openChat);
+  // sidenav type buttons styles
+  const sidenavTypeButtonsStyles = ({
+    functions: { pxToRem },
+    palette: { white, dark, background },
+    borders: { borderWidth },
+  }) => ({
+    height: pxToRem(39),
+    background: darkMode ? background.sidenav : white.main,
+    color: darkMode ? white.main : dark.main,
+    border: `${borderWidth[1]} solid ${darkMode ? white.main : dark.main}`,
+
+    "&:hover, &:focus, &:focus:not(:hover)": {
+      background: darkMode ? background.sidenav : white.main,
+      color: darkMode ? white.main : dark.main,
+      border: `${borderWidth[1]} solid ${darkMode ? white.main : dark.main}`,
+    },
+  });
 
   useEffect(() => {
-    socket.current = io("http://localhost:8900");
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
+
+  useEffect(() => {
+    socket.current = io(process.env.mainSocket);
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -41,7 +68,7 @@ export default function Messenger() {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/conversations/${user?.result._id}`);
+        const res = await axios.get(`https://danganhapi.herokuapp.com/conversations/${user?.result._id}`);
         setConversations(res.data);
       } catch (err) {
         console.log(err);
@@ -53,7 +80,7 @@ export default function Messenger() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/messages/${currentChat?._id}`);
+        const res = await axios.get(`https://danganhapi.herokuapp.com/messages/${currentChat?._id}`);
         setMessages(res.data);
       } catch (err) {
         console.log(err);
@@ -73,7 +100,7 @@ export default function Messenger() {
     const receiverId = currentChat.members.find((member) => member !== user.result._id);
     console.log("receiverId: ", receiverId);
     try {
-      const res = await axios.post("http://localhost:5000/messages", message);
+      const res = await axios.post("https://danganhapi.herokuapp.com/messages", message);
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {
@@ -93,49 +120,68 @@ export default function Messenger() {
 
   return (
     <div className="messenger">
-      <div className="chatMenu">
-        <div className="chatMenuWrapper">
-          <input placeholder="Search for friends" className="chatMenuInput" />
-          {conversations.map((c) => (
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => setCurrentChat(c)}
-              onKeyDown={() => setCurrentChat(c)}
+      {!openChat ? (
+        <div className="chatMenu">
+          <div className="chatMenuWrapper">
+            {conversations.map((c) => (
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  setCurrentChat(c);
+                  handleChat();
+                }}
+                onKeyDown={() => {
+                  setCurrentChat(c);
+                  handleChat();
+                }}
+              >
+                <Conversation conversation={c} currentUser={user} />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="chatBox">
+          <MDBox sx={{ mx: 1, width: "4rem", minWidth: "4rem" }}>
+            <MDButton
+              color="dark"
+              variant="gradient"
+              onClick={handleChat}
+              fullWidth
+              sx={sidenavTypeButtonsStyles}
             >
-              <Conversation conversation={c} currentUser={user} />
-            </div>
-          ))}
+              Back
+            </MDButton>
+          </MDBox>
+          <div className="chatBoxWrapper">
+            {openChat ? (
+              <>
+                <MDBox pt={0.5} pb={3} px={3} style={{ overflowY: "scroll" }} height="50vh">
+                  {messages.map((m) => (
+                    <div ref={scrollRef}>
+                      <Message message={m} own={m.sender === user.result._id} />
+                    </div>
+                  ))}
+                </MDBox>
+                <div className="chatBoxBottom">
+                  <textarea
+                    className="chatMessageInput"
+                    placeholder="write something..."
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    value={newMessage}
+                  />
+                  <button type="button" className="chatSubmitButton" onClick={handleSubmit}>
+                    Send
+                  </button>
+                </div>
+              </>
+            ) : (
+              <span className="noConversationText">Op</span>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="chatBox">
-        <div className="chatBoxWrapper">
-          {currentChat ? (
-            <>
-              <div className="chatBoxTop">
-                {messages.map((m) => (
-                  <div ref={scrollRef}>
-                    <Message message={m} own={m.sender === user.result._id} />
-                  </div>
-                ))}
-              </div>
-              <div className="chatBoxBottom">
-                <textarea
-                  className="chatMessageInput"
-                  placeholder="write something..."
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  value={newMessage}
-                />
-                <button type="button" className="chatSubmitButton" onClick={handleSubmit}>
-                  Send
-                </button>
-              </div>
-            </>
-          ) : (
-            <span className="noConversationText">Op</span>
-          )}
-        </div>
-      </div>
+      )}
     </div>
   );
 }

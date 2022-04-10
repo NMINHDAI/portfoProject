@@ -1,22 +1,9 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+/* eslint-disable no-param-reassign, no-underscore-dangle */
 import React, { useState, useEffect } from "react";
 
 // react-router-dom components
 import { useLocation, Link, useNavigate } from "react-router-dom";
-
+import { io } from "socket.io-client";
 import { useDispatch } from "react-redux";
 // @mui material components
 import Divider from "@mui/material/Divider";
@@ -42,7 +29,7 @@ import decode from "jwt-decode";
 import { useMaterialUIController, setOpenChatting } from "context";
 import { GoogleLogin } from "react-google-login";
 import Messenger from "../../layouts/messenger/Messenger";
-
+import socket from "../../layouts/messenger/socketio";
 import { signin } from "../../actions/auth";
 import * as actionType from "../../constants/actionTypes";
 
@@ -56,7 +43,6 @@ function Chatting() {
   const { openChatting, darkMode } = controller;
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   const handleCloseChatting = () => setOpenChatting(dispatch, false);
-
   const [form, setForm] = useState(initialState);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -83,15 +69,17 @@ function Chatting() {
 
   const logout = () => {
     authdispatch({ type: actionType.LOGOUT });
-
-    navigate("/dashboard");
-
+    socket.current.emit("removeUser", user.result._id);
     setUser(null);
+    navigate("/dashboard");
   };
 
   useEffect(() => {
+    socket.current = io(process.env.mainSocket);
+  }, []);
+
+  useEffect(() => {
     const token = user?.token;
-    console.log("chatting", user);
     if (token) {
       const decodedToken = decode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
@@ -147,7 +135,7 @@ function Chatting() {
         <Icon
           sx={({ typography: { size }, palette: { dark, white } }) => ({
             fontSize: `${size.lg} !important`,
-            color: darkMode ? white.main : dark.main,
+            color: !darkMode ? white.main : dark.main,
             stroke: "currentColor",
             strokeWidth: "2px",
             cursor: "pointer",
