@@ -45,7 +45,7 @@ export default function Messenger() {
   }, [location]);
 
   useEffect(() => {
-    socket.current = io(process.env.mainSocket);
+    socket.current = io(process.env.REACT_APP_mainSocket);
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,

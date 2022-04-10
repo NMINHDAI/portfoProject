@@ -75,7 +75,7 @@ function Chatting() {
   };
 
   useEffect(() => {
-    socket.current = io(process.env.mainSocket);
+    socket.current = io(process.env.REACT_APP_mainSocket);
   }, []);
 
   useEffect(() => {

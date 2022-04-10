@@ -1,8 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: "https://cors-proxy420.herokuapp.com/https://danganhapi.herokuapp.com/",
-});
+const API = axios.create({ baseURL: process.env.REACT_APP_mainAPI });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
