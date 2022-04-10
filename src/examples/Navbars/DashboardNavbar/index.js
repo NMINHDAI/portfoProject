@@ -1,20 +1,6 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
+/* eslint-disable no-param-reassign, no-underscore-dangle */
 import { useState, useEffect } from "react";
-
+import { io } from "socket.io-client";
 // react-router components
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -26,6 +12,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Icon from "@mui/material/Icon";
+
 import { Button } from "@material-ui/core";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -46,7 +33,7 @@ import {
 
 // Material Dashboard 2 React context
 import { useMaterialUIController, setTransparentNavbar, setMiniSidenav } from "context";
-
+import socket from "../../../layouts/messenger/socketio";
 import * as actionType from "../../../constants/actionTypes";
 
 function DashboardNavbar({ absolute, light, isMini }) {
@@ -102,11 +89,14 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   const logout = () => {
     authdispatch({ type: actionType.LOGOUT });
-
-    navigate("/dashboard");
-
+    socket.current.emit("removeUser", user.result._id);
     setUser(null);
+    navigate("/dashboard");
   };
+
+  useEffect(() => {
+    socket.current = io(process.env.REACT_APP_mainSocket);
+  }, []);
 
   useEffect(() => {
     const token = user?.token;

@@ -11,9 +11,7 @@ export default function Conversation({ conversation, currentUser }) {
 
     const getUser = async () => {
       try {
-        const res = await axios(
-          `https://cors-proxy420.herokuapp.com/https://danganhapi.herokuapp.com/api/users?userId=${friendId}`
-        );
+        const res = await axios(`https://danganhapi.herokuapp.com/users?userId=${friendId}`);
         setUser(res.data);
       } catch (err) {
         console.log(err);
