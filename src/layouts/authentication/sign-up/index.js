@@ -14,11 +14,12 @@ Coded by www.creative-tim.com
 */
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -31,8 +32,23 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import { signup } from "../../../actions/auth";
 
+const initialState = { name: "", email: "", password: "" };
 function Cover() {
+  const [form, setForm] = useState(initialState);
+  const authdispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const handleShowPassword = () => setShowPassword(!showPassword);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(form);
+    authdispatch(signup(form, navigate));
+  };
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -57,38 +73,24 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
+              <MDInput name="name" type="text" label="Name" onChange={handleChange} fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <MDInput name="email" type="email" label="Email" onChange={handleChange} fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;I agree the&nbsp;
-              </MDTypography>
-              <MDTypography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                color="info"
-                textGradient
-              >
-                Terms and Conditions
-              </MDTypography>
+              <MDInput
+                name="password"
+                label="Password"
+                onChange={handleChange}
+                type={showPassword ? "text" : "password"}
+                handleShowPassword={handleShowPassword}
+                fullWidth
+              />
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
-                sign in
+              <MDButton variant="gradient" color="info" onClick={handleSubmit} fullWidth>
+                Sign Up
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">

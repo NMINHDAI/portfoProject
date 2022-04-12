@@ -13,6 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { useState, useEffect } from "react";
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
@@ -22,7 +23,7 @@ import Grid from "@mui/material/Grid";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 // import MDTypography from "components/MDTypography";
-
+import breakpoints from "assets/theme/base/breakpoints";
 // Material Dashboard 2 React example components
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
@@ -31,6 +32,15 @@ import PageLayout from "examples/LayoutContainers/PageLayout";
 import Footer from "layouts/authentication/components/Footer";
 
 function CoverLayout({ coverHeight, image, children }) {
+  const [mobileView, setMobileView] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth < breakpoints.values.lg) {
+      setMobileView(true);
+    } else {
+      setMobileView(false);
+    }
+  });
   return (
     <PageLayout>
       <DefaultNavbar
@@ -69,7 +79,7 @@ function CoverLayout({ coverHeight, image, children }) {
           </Grid>
         </Grid>
       </MDBox>
-      <Footer />
+      {!mobileView ? <Footer /> : []}
     </PageLayout>
   );
 }
