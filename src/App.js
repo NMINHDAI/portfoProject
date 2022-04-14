@@ -29,6 +29,7 @@ import MDBox from "components/MDBox";
 // Material Dashboard 2 React example components
 import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
+import Clock from "examples/Clock";
 import Chatting from "examples/Chatting";
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
@@ -52,6 +53,7 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
   setOpenChatting,
+  setOpenClock,
 } from "context";
 
 // Images
@@ -66,6 +68,7 @@ export default function App() {
     layout,
     openConfigurator,
     openChatting,
+    openClock,
     sidenavColor,
     transparentSidenav,
     whiteSidenav,
@@ -106,6 +109,9 @@ export default function App() {
 
   // Change the openConfigurator state
   const handleChattingOpen = () => setOpenChatting(dispatch, !openChatting);
+
+  // Change the openConfigurator state
+  const handleClockOpen = () => setOpenClock(dispatch, !openClock);
 
   // Setting the dir attribute for the body element
   useEffect(() => {
@@ -179,6 +185,30 @@ export default function App() {
     </MDBox>
   );
 
+  const configsClockButton = (
+    <MDBox
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="3.25rem"
+      height="3.25rem"
+      bgColor="white"
+      shadow="sm"
+      borderRadius="50%"
+      position="fixed"
+      right="2rem"
+      bottom="10rem"
+      zIndex={99}
+      color="dark"
+      sx={{ cursor: "pointer" }}
+      onClick={handleClockOpen}
+    >
+      <Icon fontSize="small" color="inherit">
+        access_time_filled
+      </Icon>
+    </MDBox>
+  );
+
   const user = JSON.parse(localStorage.getItem("profile"));
 
   return direction === "rtl" ? (
@@ -199,6 +229,8 @@ export default function App() {
             {configsSettingButton}
             <Chatting />
             {configsChattingButton}
+            <Clock />
+            {configsClockButton}
           </>
         )}
         {layout === "vr" && <Configurator />}
@@ -225,6 +257,8 @@ export default function App() {
           {configsSettingButton}
           <Chatting />
           {configsChattingButton}
+          <Clock />
+            {configsClockButton}
         </>
       )}
       {layout === "vr" && <Configurator />}
