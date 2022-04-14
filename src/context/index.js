@@ -59,6 +59,9 @@ function reducer(state = { authData: null }, action) {
     case "OPEN_CHAT": {
       return { ...state, openChat: action.value };
     }
+    case "OPEN_CLOCK": {
+      return { ...state, openClock: action.value };
+    }
     case "DIRECTION": {
       return { ...state, direction: action.value };
     }
@@ -86,6 +89,7 @@ function MaterialUIControllerProvider({ children }) {
     openConfigurator: false,
     openChatting: false,
     openChat: false,
+    openClock: false,
     direction: "ltr",
     layout: "dashboard",
     darkMode: false,
@@ -126,6 +130,7 @@ const setFixedNavbar = (dispatch, value) => dispatch({ type: "FIXED_NAVBAR", val
 const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGURATOR", value });
 const setOpenChatting = (dispatch, value) => dispatch({ type: "OPEN_CHATTING", value });
 const setOpenChat = (dispatch, value) => dispatch({ type: "OPEN_CHAT", value });
+const setOpenClock = (dispatch, value) => dispatch({ type: "OPEN_CLOCK", value });
 const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
@@ -142,6 +147,7 @@ export {
   setOpenConfigurator,
   setOpenChatting,
   setOpenChat,
+  setOpenClock,
   setDirection,
   setLayout,
   setDarkMode,
