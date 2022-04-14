@@ -83,7 +83,7 @@ function Dashboard() {
 
     axios.get(LIGHT_URL).then((response) => {
       // const id = response.data[response.data.length - 1].value;
-      const myLightStatus = response.data.value; // Get the 
+      const myLightStatus = response.data[0].value; // Get the 
       // getID(id);
       getLightStatus(myLightStatus)
     })
@@ -188,7 +188,7 @@ function Dashboard() {
                 color="primary"
                 icon="person_add"
                 title="Lights"
-                count = {lightStatus === false ? "Light is on" : "Light is off"}
+                count = {lightStatus === false ? "Light is off" : "Light is on"}
                 percentage={{
                   color: "success",
                   amount: "",

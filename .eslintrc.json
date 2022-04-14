@@ -14,7 +14,7 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "prettier/prettier": [
-      "error",
+      0,
       {
         "endOfLine": "auto"
       }
