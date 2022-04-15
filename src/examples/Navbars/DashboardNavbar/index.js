@@ -16,7 +16,6 @@ import Icon from "@mui/material/Icon";
 import { Button } from "@material-ui/core";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
 
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
