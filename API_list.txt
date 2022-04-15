@@ -1,0 +1,42 @@
+//////////////GET /////////////////////////// 
+https://danganhapi1.herokuapp.com/api/temperature trả về list 10 Float gần nhất
+https://danganhapi1.herokuapp.com/api/humidity    trả về list 10 Float gần nhất
+https://danganhapi1.herokuapp.com/api/landHumidity trả về list 10 Float gần nhất 
+https://danganhapi1.herokuapp.com/api/lightButton  trả về list 1 Boolean (true, false) gần nhất
+https://danganhapi1.herokuapp.com/api/photoresistor  trả về list 1 Boolean (true, false) gần nhất
+////////////////////////////////////////////////////////
+
+
+///////////POST raw json with body {...}//////////////////////////////////
+
+https://danganhapi1.herokuapp.com/api/temperature  (value: Float từ 0 - 50)
+body: {
+	"value": 1,
+	"secretKey": "linhdungnetrieu"
+}
+
+https://danganhapi1.herokuapp.com/api/humidity  (value: Float từ 0 - 100)
+body: {
+	"value": 1,
+	"secretKey": "linhdungnetrieu"
+}
+
+https://danganhapi1.herokuapp.com/api/landHumidity (value: Float từ 0 - 1024)
+
+body: {
+	"value": 1,
+	"secretKey": "linhdungnetrieu"
+}
+
+https://danganhapi1.herokuapp.com/api/lightButton  (value: 0 hoac 1)
+body: {
+	"value": 1,
+	"secretKey": "linhdungnetrieu"
+}
+
+https://danganhapi1.herokuapp.com/api/photoresistor  (value: 0 hoac 1)
+body: {
+	"value": 1,
+	"secretKey": "linhdungnetrieu"
+}
+///////////////////////////////////////////////////////////////////////////
