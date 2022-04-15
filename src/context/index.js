@@ -71,6 +71,12 @@ function reducer(state = { authData: null }, action) {
     case "DARKMODE": {
       return { ...state, darkMode: action.value };
     }
+    case "SET_VISIBLE": {
+      return { ...state, visible: action.value };
+    }
+    case "SET_SEARCHCONTENT": {
+        return { ...state, searchContent: action.value };
+    }
     default: {
       return state;
     }
@@ -93,6 +99,8 @@ function MaterialUIControllerProvider({ children }) {
     direction: "ltr",
     layout: "dashboard",
     darkMode: false,
+    visible: false,
+    searchContent: "Ho Chi Minh city"
   };
 
   const [controller, dispatch] = useReducer(reducer, initialState);
@@ -135,6 +143,9 @@ const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value })
 const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
 const setDarkMode = (dispatch, value) => dispatch({ type: "DARKMODE", value });
 
+const setVisible = (dispatch, value) => dispatch({ type: "SET_VISIBLE", value });
+const setSearchContent = (dispatch, value) => dispatch({ type: "SET_SEARCHCONTENT", value });
+
 export {
   MaterialUIControllerProvider,
   useMaterialUIController,
@@ -151,4 +162,6 @@ export {
   setDirection,
   setLayout,
   setDarkMode,
+  setVisible,
+  setSearchContent,
 };

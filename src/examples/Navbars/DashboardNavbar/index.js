@@ -33,6 +33,7 @@ import {
 
 // Material Dashboard 2 React context
 import { useMaterialUIController, setTransparentNavbar, setMiniSidenav } from "context";
+import Search from "./Search";
 import socket from "../../../layouts/messenger/socketio";
 import * as actionType from "../../../constants/actionTypes";
 
@@ -120,9 +121,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <MDBox pr={1}>
-              <MDInput label="Search here" />
-            </MDBox>
+            <Search />
             {user?.result ? (
               <MDBox color={light ? "white" : "inherit"}>
                 <IconButton

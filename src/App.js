@@ -31,6 +31,7 @@ import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 import Clock from "examples/Clock";
 import Chatting from "examples/Chatting";
+import Weather from "examples/Weather";
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
@@ -73,6 +74,7 @@ export default function App() {
     transparentSidenav,
     whiteSidenav,
     darkMode,
+    visible,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
@@ -258,7 +260,8 @@ export default function App() {
           <Chatting />
           {configsChattingButton}
           <Clock />
-            {configsClockButton}
+          {configsClockButton}
+          <Weather/>
         </>
       )}
       {layout === "vr" && <Configurator />}
