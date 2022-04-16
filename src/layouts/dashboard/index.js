@@ -92,7 +92,7 @@ function Dashboard() {
 
   useEffect(() => {
     getIDs();
-  } , 0);
+  } , []);
 
   const TemperatureData = {
     labels: [...Array(tempList.length).keys()].map(x => "Day ".concat((x + 1).toString())),
