@@ -46,6 +46,7 @@ function Clock() {
     darkMode,
   } = controller;
   const [dateTime, setDateTime] = useState(new Date());
+  const [geoData, setGeoData] = useState({});
 
   const placeholderResponse = {
     name: 'HoChiMinh',
@@ -73,23 +74,31 @@ function Clock() {
     setGeoData(geoFinal);
   };
 
-  const [geoData, setGeoData] = useState({});
+  const date = () => {
+    const newDt = (typeof geoData['timezone'] !== 'undefined')? 
+      new Date(dateTime.getTime() + geoData['timezone'] * 1000) : 
+      new Date();
+    return newDt.toLocaleDateString('en-GB', {
+      timeZone: 'UTC',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      weekday: 'long',
+    });
+  }
 
-  const date = dateTime.toLocaleDateString('en-GB', {
-    timeZone: 'asia/ho_chi_minh',
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    weekday: 'long',
-  });
-
-  const time = dateTime.toLocaleString('en-GB', {
-    timeZone: 'asia/ho_chi_minh',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: false,
-  });
+  const time = () => {
+    const newDt = (typeof geoData['timezone'] !== 'undefined')? 
+      new Date(dateTime.getTime() + geoData['timezone'] * 1000) : 
+      new Date();
+    return newDt.toLocaleString('en-GB', {
+      timeZone: 'UTC',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: false,
+    });
+  }
 
   const location = () => {
     return (typeof geoData['name'] !== 'undefined')?
@@ -111,14 +120,16 @@ function Clock() {
 
   const formatTemp = (t) => {
     return (t - 273.15).toFixed(2);
-  }
+  };
 
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
-    fetchGeoData();
     setInterval(() => setDateTime(new Date()), 1000);
-    setInterval(() => fetchGeoData(), 600000);
   }, []);
+
+  useEffect(() => {
+    fetchGeoData();
+  }, [searchContent])
 
   const handleCloseClock = () => setOpenClock(dispatch, false);
   
@@ -160,14 +171,14 @@ function Clock() {
         <MDBox>
           <MDTypography variant="h6">Date</MDTypography>
           <MDBox mb={0.5}>
-            {date}
+            {date()}
           </MDBox>
         </MDBox>
 
         <MDBox>
           <MDTypography variant="h6">Time</MDTypography>
           <MDBox mb={0.5}>
-            {time}
+            {time()}
           </MDBox>
         </MDBox>
 
@@ -195,7 +206,7 @@ function Clock() {
           </MDBox>
         </MDBox>
 
-        {/* <MDButton onClick={() => console.log(geoData)}>
+        {/* <MDButton onClick={() => {console.log(dateTime.getTimezoneOffset());}}>
           Dump
         </MDButton> */}
 
