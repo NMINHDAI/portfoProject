@@ -195,9 +195,9 @@ function Clock() {
           </MDBox>
         </MDBox>
 
-        <MDButton onClick={() => console.log(geoData)}>
+        {/* <MDButton onClick={() => console.log(geoData)}>
           Dump
-        </MDButton>
+        </MDButton> */}
 
         <Divider />
         <MDBox mt={3} mb={2}>
