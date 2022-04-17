@@ -77,8 +77,8 @@ function Weather() {
   let tempMax = (300 - 273.15).toFixed(2);
 
   const handleOnclick = async (e) => {
-    const ev = new CustomEvent('locaionDecided', {detail: {lat: e.lat, lon: e.lon}});
-    // console.log(`Dispatching with data: e.lat ${e.lat}, e.lon ${e.lon}`);
+    const ev = new CustomEvent('locationDecided', {detail: {lat: e.lat, lon: e.lon}});
+    console.log(`Dispatching with data: e.lat ${e.lat}, e.lon ${e.lon}`);
     window.dispatchEvent(ev);
     setVisibleResult(false);
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${e.lat}&lon=${e.lon}&appid=3b9acedd8b3d02015d5abc67a5bbdbf4`);

@@ -132,7 +132,7 @@ function Clock() {
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
     setInterval(() => setDateTime(new Date()), 1000);
-    window.addEventListener('locationDecided', (e) => {fetchGeoDataWCoords(e.detail.lat, e.detail.lon);});
+    window.addEventListener('locationDecided', (e) => {console.log(e); fetchGeoDataWCoords(e.detail.lat, e.detail.lon);});
   }, []);
 
   // useEffect(() => {
