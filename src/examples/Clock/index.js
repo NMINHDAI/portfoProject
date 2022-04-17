@@ -74,6 +74,13 @@ function Clock() {
     setGeoData(geoFinal);
   };
 
+  const fetchGeoDataWCoords = async (lat, lon) => {
+    const weatherRaw = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=3b9acedd8b3d02015d5abc67a5bbdbf4`);
+    const geoFinal = await weatherRaw.json();
+    console.log(geoFinal);
+    setGeoData(geoFinal);
+  }
+
   const date = () => {
     const newDt = (typeof geoData['timezone'] !== 'undefined')? 
       new Date(dateTime.getTime() + geoData['timezone'] * 1000) : 
@@ -102,7 +109,7 @@ function Clock() {
 
   const location = () => {
     return (typeof geoData['name'] !== 'undefined')?
-    `${geoData['name']} (${geoData['country']})` : 'Null';
+    geoData['name'] : 'Null';
   };
   const weather = () => {
     return (typeof geoData['weather'] !== 'undefined')?
@@ -125,11 +132,12 @@ function Clock() {
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
     setInterval(() => setDateTime(new Date()), 1000);
+    window.addEventListener('locationDecided', (e) => {fetchGeoDataWCoords(e.detail.lat, e.detail.lon);});
   }, []);
 
-  useEffect(() => {
-    fetchGeoData();
-  }, [searchContent])
+  // useEffect(() => {
+  //   fetchGeoData();
+  // }, [searchContent])
 
   const handleCloseClock = () => setOpenClock(dispatch, false);
   
