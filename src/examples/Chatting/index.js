@@ -135,7 +135,7 @@ function Chatting() {
         <Icon
           sx={({ typography: { size }, palette: { dark, white } }) => ({
             fontSize: `${size.lg} !important`,
-            color: !darkMode ? white.main : dark.main,
+            color: darkMode ? white.main : dark.main,
             stroke: "currentColor",
             strokeWidth: "2px",
             cursor: "pointer",

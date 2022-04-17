@@ -56,13 +56,37 @@ function Weather() {
     second: '2-digit'
   });
 
+  const placeholderLocation = [{
+    name: 'HoChiMinh',
+    country: 'VN',
+  }];
+
+  const placeholderWeather = {
+    weather: [{
+      main: 'Clouds',
+    }],
+    main: {
+      temp: 300,
+      temp_min: 297,
+      temp_max: 303,
+    }
+  };
+
   let temp = (296.1 - 273.15).toFixed(2);
   let tempMin = (297.3 - 273.15).toFixed(2);
   let tempMax = (300 - 273.15).toFixed(2);
 
   const handleOnclick = async (e) => {
+    const ev = new CustomEvent('locationDecided', {detail: {lat: e.lat, lon: e.lon}});
+    console.log(`Dispatching with data: e.lat ${e.lat}, e.lon ${e.lon}`);
+    window.dispatchEvent(ev);
     setVisibleResult(false);
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${e.lat}&lon=${e.lon}&appid=3b9acedd8b3d02015d5abc67a5bbdbf4`);
+    if (response.status != 200) {
+      console.log(response.status + ', falling back to preset data');
+        setData(placeholderWeather);
+        return;
+    }
     setData(await response.json());
   };
 
@@ -71,6 +95,11 @@ function Weather() {
     const fetchWeather = async () => {
       console.log(searchContent);
       const res1 = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${searchContent}&limit=5&appid=3b9acedd8b3d02015d5abc67a5bbdbf4`);
+      if (res1.status != 200) {
+        console.log(res1.status + ', falling back to preset data');
+        setCountryName(placeholderLocation);
+        return;
+      }
       const countryname = await res1.json()
       setCountryName(countryname);
     }

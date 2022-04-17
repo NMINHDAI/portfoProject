@@ -92,7 +92,7 @@ function Dashboard() {
 
   useEffect(() => {
     getIDs();
-  } , 0);
+  } , []);
 
   const TemperatureData = {
     labels: [...Array(tempList.length).keys()].map(x => "Day ".concat((x + 1).toString())),
@@ -241,7 +241,7 @@ function Dashboard() {
             </Grid>
           </Grid>
         </MDBox>
-        <MDBox>
+        {/* <MDBox>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
               <Projects />
@@ -250,7 +250,7 @@ function Dashboard() {
               <OrdersOverview />
             </Grid>
           </Grid>
-        </MDBox>
+        </MDBox> */}
       </MDBox>
       <Footer />
     </DashboardLayout>
