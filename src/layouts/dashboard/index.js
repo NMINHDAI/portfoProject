@@ -37,14 +37,11 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 // import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // Dashboard components 
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+// import Projects from "layouts/dashboard/components/Projects";
+// import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
   // const { sales, tasks } = reportsLineChartData;
-  // var data = 29999;
-  // data = 29;
-  // data = 281;
   const TEMPERATURE_URL = "https://danganhapi1.herokuapp.com/api/temperature"; 
   const HUMIDITY_URL = "https://danganhapi1.herokuapp.com/api/humidity";
   const LANDHUMIDITY_URL = "https://danganhapi1.herokuapp.com/api/landHumidity"
@@ -171,7 +168,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="success"
-                icon="store"
+                icon="yard"
                 title="Land humidity"
                 count= {landHumidityList[landHumidityList.length - 1]}
                 percentage={{
@@ -186,8 +183,8 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 color="primary"
-                icon="person_add"
-                title="Lights"
+                icon="light"
+                title="Light"
                 count = {lightStatus === false ? "Light is off" : "Light is on"}
                 percentage={{
                   color: "success",
