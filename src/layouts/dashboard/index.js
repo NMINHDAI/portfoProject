@@ -228,7 +228,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
-                  color="dark"
+                  color="primary"
                   title="Last 10 days land humidity"
                   description="Land humidity for the last 10 days"
                   date="just updated"
