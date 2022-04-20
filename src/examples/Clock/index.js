@@ -16,21 +16,21 @@ Coded by www.creative-tim.com
 import { useState, useEffect } from "react";
 
 // react-github-btn
-import GitHubButton from "react-github-btn";
+// import GitHubButton from "react-github-btn";
 
 // @mui material components
 import Divider from "@mui/material/Divider";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
 // @mui icons
-import TwitterIcon from "@mui/icons-material/Twitter";
-import FacebookIcon from "@mui/icons-material/Facebook";
+// import TwitterIcon from "@mui/icons-material/Twitter";
+// import FacebookIcon from "@mui/icons-material/Facebook";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+// import MDButton from "components/MDButton";
 
 // Custom styles for the Clock
 import ClockRoot from "examples/Clock/ClockRoot";
@@ -219,7 +219,7 @@ function Clock() {
         </MDButton> */}
 
         <Divider />
-        <MDBox mt={3} mb={2}>
+        {/* <MDBox mt={3} mb={2}>
           <MDButton
             component={Link}
             href="https://www.creative-tim.com/learning-lab/react/quick-start/material-dashboard/"
@@ -231,9 +231,9 @@ function Clock() {
           >
             view documentation
           </MDButton>
-        </MDBox>
+        </MDBox> */}
         <MDBox display="flex" justifyContent="center">
-          <GitHubButton
+          {/* <GitHubButton
             href="https://github.com/creativetimofficial/material-dashboard-react"
             data-icon="octicon-star"
             data-size="large"
@@ -241,14 +241,14 @@ function Clock() {
             aria-label="Star creativetimofficial/material-dashboard-react on GitHub"
           >
             Star
-          </GitHubButton>
+          </GitHubButton> */}
         </MDBox>
         <MDBox mt={2} textAlign="center">
-          <MDBox mb={0.5}>
+          {/* <MDBox mb={0.5}>
             <MDTypography variant="h6">Thank you for sharing!</MDTypography>
-          </MDBox>
+          </MDBox> */}
 
-          <MDBox display="flex" justifyContent="center">
+          {/* <MDBox display="flex" justifyContent="center">
             <MDBox mr={1.5}>
               <MDButton
                 component={Link}
@@ -271,7 +271,7 @@ function Clock() {
               <FacebookIcon />
               &nbsp; Share
             </MDButton>
-          </MDBox>
+          </MDBox> */}
         </MDBox>
       </MDBox>
     </ClockRoot>
