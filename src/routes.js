@@ -57,7 +57,7 @@ const routesUser = [
     component: <Dashboard />,
   },
   {
-    type: "collapse",
+    type: "hide",
     name: "Tables",
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
@@ -65,7 +65,7 @@ const routesUser = [
     component: <Tables />,
   },
   {
-    type: "collapse",
+    type: "hide",
     name: "Billing",
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
@@ -73,7 +73,7 @@ const routesUser = [
     component: <Billing />,
   },
   {
-    type: "collapse",
+    type: "hide",
     name: "RTL",
     key: "rtl",
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
@@ -81,7 +81,7 @@ const routesUser = [
     component: <RTL />,
   },
   {
-    type: "collapse",
+    type: "hide",
     name: "Notifications",
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,
@@ -89,7 +89,7 @@ const routesUser = [
     component: <Notifications />,
   },
   {
-    type: "collapse",
+    type: "hide",
     name: "Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
