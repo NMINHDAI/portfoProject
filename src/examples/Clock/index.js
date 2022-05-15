@@ -61,18 +61,18 @@ function Clock() {
     }
   };
 
-  const fetchGeoData = async () => {
-    const initRes = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${searchContent}&limit=5&appid=3b9acedd8b3d02015d5abc67a5bbdbf4`);
-    if (initRes.status != 200) {
-      console.log(initRes.status + ', falling back to preset data');
-      setGeoData(placeholderResponse);
-      return;
-    }
-    const locationRaw = (await initRes.json())[0];
-    const weatherRaw = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${locationRaw.lat}&lon=${locationRaw.lon}&appid=3b9acedd8b3d02015d5abc67a5bbdbf4`)).json();
-    const geoFinal = Object.assign(locationRaw, weatherRaw);
-    setGeoData(geoFinal);
-  };
+  // const fetchGeoData = async () => {
+  //   const initRes = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${searchContent}&limit=5&appid=3b9acedd8b3d02015d5abc67a5bbdbf4`);
+  //   if (initRes.status != 200) {
+  //     console.log(initRes.status + ', falling back to preset data');
+  //     setGeoData(placeholderResponse);
+  //     return;
+  //   }
+  //   const locationRaw = (await initRes.json())[0];
+  //   const weatherRaw = await (await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${locationRaw.lat}&lon=${locationRaw.lon}&appid=3b9acedd8b3d02015d5abc67a5bbdbf4`)).json();
+  //   const geoFinal = Object.assign(locationRaw, weatherRaw);
+  //   setGeoData(geoFinal);
+  // };
 
   const fetchGeoDataWCoords = async (lat, lon) => {
     const weatherRaw = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=3b9acedd8b3d02015d5abc67a5bbdbf4`);
@@ -109,20 +109,20 @@ function Clock() {
 
   const location = () => {
     return (typeof geoData['name'] !== 'undefined')?
-    geoData['name'] : 'Null';
+    geoData['name'] : 'Select a location with the searchbar';
   };
   const weather = () => {
     return (typeof geoData['weather'] !== 'undefined')?
-      geoData['weather'][0]['main'] : 'Null';
+      geoData['weather'][0]['main'] : 'Select a location with the searchbar';
   };
   const tempCurrent = () => {
     return (typeof geoData['main'] !== 'undefined')?
-    `Currently: ${formatTemp(geoData['main']['temp'])}\u00B0C` : 'Null';
+    `Currently: ${formatTemp(geoData['main']['temp'])}\u00B0C` : 'Select a location with the searchbar';
   };
   const tempRange = () => {
     return (typeof geoData['main'] !== 'undefined')?
     `Range: ${formatTemp(geoData['main']['temp_min'])}\u00B0C ~ 
-    ${formatTemp(geoData['main']['temp_max'])}\u00B0C` : 'Null';
+    ${formatTemp(geoData['main']['temp_max'])}\u00B0C` : 'Select a location with the searchbar';
   };
 
   const formatTemp = (t) => {
